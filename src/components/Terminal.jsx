@@ -6,6 +6,7 @@ const Terminal = () => {
   const [history, setHistory] = useState([
     { type: 'system', text: 'Welcome to Abhishek Yadav\'s portfolio terminal!' },
     { type: 'system', text: 'Type "help" to see available commands.' },
+    { type: 'system', text: 'Navbar there for Losers!' },
     { type: 'prompt', text: '' }
   ]);
   const inputRef = useRef(null);

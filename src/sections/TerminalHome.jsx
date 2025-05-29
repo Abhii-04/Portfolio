@@ -31,7 +31,7 @@ const TerminalHome = () => {
           className="mt-10 text-center text-gray-500 dark:text-gray-400 text-sm"
         >
           <p>Type "help" to see available commands</p>
-          <p className="mt-2">Try finding the Easter eggs!</p>
+          
         </motion.div>
       </div>
     </section>
