@@ -52,17 +52,24 @@ const Contact = () => {
     setIsSubmitting(true)
     
     try {
-      // Create form data object with all required fields
+      // Create a simple JSON payload instead of FormData
       const formPayload = {
-        access_key: '9baf865b-5097-43ce-935a-052e859170bf', // Your Web3Forms access key
+        access_key: '9baf865b-5097-43ce-935a-052e859170bf',
         name: formData.name,
         email: formData.email,
         message: formData.message,
         subject: formData.subject ? `New contact from portfolio: ${formData.subject}` : 'New contact from portfolio',
+        from_name: formData.name, // Use the actual name from the form
+        botcheck: '', // Empty botcheck field to prevent spam
+        // Add a honeypot field
+        hp: '',
+        // Add a resubmitted flag to indicate this is a legitimate submission
+        resubmitted: true
       };
       
       console.log('Sending form data:', formPayload);
       
+      // Use the fetch API to submit the form with JSON
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
@@ -76,10 +83,15 @@ const Contact = () => {
       console.log('Response from Web3Forms:', data);
       
       if (data.success) {
+        console.log('Form submitted successfully!');
         setSubmitStatus('success');
         setFormData({ name: '', email: '', subject: '', message: '' });
       } else {
         console.error('Form submission error:', data);
+        // Check if it's a spam error and provide a more helpful message
+        if (data.message && data.message.includes('spam')) {
+          alert('Your message was flagged as spam. Please try again with a different message or contact me directly at abhi740000@gmail.com');
+        }
         setSubmitStatus('error');
       }
     } catch (error) {
@@ -153,8 +165,9 @@ const Contact = () => {
             viewport={{ once: true }}
           >
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Honeypot field to prevent spam */}
+              {/* Honeypot fields to prevent spam */}
               <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+              <input type="text" name="hp" className="hidden" style={{ display: 'none' }} />
               
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-1">
@@ -253,7 +266,7 @@ const Contact = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="p-3 bg-red-100 text-red-800 rounded-md text-sm"
                 >
-                  There was an error sending your message. Please try again later.
+                  There was an error sending your message. Please try again with a different message or email me directly at <a href="mailto:abhi740000@gmail.com" className="underline font-medium">abhi740000@gmail.com</a>.
                 </motion.div>
               )}
             </form>
