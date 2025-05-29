@@ -52,26 +52,34 @@ const Contact = () => {
     setIsSubmitting(true)
     
     try {
+      // Create form data object with all required fields
+      const formPayload = {
+        access_key: '9baf865b-5097-43ce-935a-052e859170bf', // Your Web3Forms access key
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        subject: formData.subject ? `New contact from portfolio: ${formData.subject}` : 'New contact from portfolio',
+      };
+      
+      console.log('Sending form data:', formPayload);
+      
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify({
-          access_key: '9baf865b-5097-43ce-935a-052e859170bf',
-          ...formData,
-          subject: `New contact from portfolio: ${formData.subject}`,
-          from_name: formData.name
-        })
+        body: JSON.stringify(formPayload)
       });
       
       const data = await response.json();
+      console.log('Response from Web3Forms:', data);
       
       if (data.success) {
         setSubmitStatus('success');
         setFormData({ name: '', email: '', subject: '', message: '' });
       } else {
+        console.error('Form submission error:', data);
         setSubmitStatus('error');
       }
     } catch (error) {
