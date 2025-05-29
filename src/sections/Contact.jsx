@@ -47,19 +47,42 @@ const Contact = () => {
     setFormData(prev => ({ ...prev, [name]: value }))
   }
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSubmitStatus('success')
-      setFormData({ name: '', email: '', subject: '', message: '' })
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: '9baf865b-5097-43ce-935a-052e859170bf',
+          ...formData,
+          subject: `New contact from portfolio: ${formData.subject}`,
+          from_name: formData.name
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
       
       // Reset status after 5 seconds
-      setTimeout(() => setSubmitStatus(null), 5000)
-    }, 1500)
+      setTimeout(() => setSubmitStatus(null), 5000);
+    }
   }
 
   return (
@@ -122,6 +145,9 @@ const Contact = () => {
             viewport={{ once: true }}
           >
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Honeypot field to prevent spam */}
+              <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+              
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-1">
                   Your Name
@@ -210,6 +236,16 @@ const Contact = () => {
                   className="p-3 bg-green-100 text-green-800 rounded-md text-sm"
                 >
                   Your message has been sent successfully! I'll get back to you soon.
+                </motion.div>
+              )}
+              
+              {submitStatus === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-3 bg-red-100 text-red-800 rounded-md text-sm"
+                >
+                  There was an error sending your message. Please try again later.
                 </motion.div>
               )}
             </form>
