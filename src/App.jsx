@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
-import Hero from './sections/Hero'
+import TerminalHome from './sections/TerminalHome'
 import About from './sections/About'
 import Skills from './sections/Skills'
 import Projects from './sections/Projects'
@@ -32,7 +32,7 @@ function App() {
           <ParticlesBackground />
           <Navbar />
           <main>
-            <Hero />
+            <TerminalHome />
             <About />
             <Skills />
             <Projects />
