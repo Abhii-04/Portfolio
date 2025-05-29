@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const Terminal = () => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState([
-    { type: 'system', text: 'Welcome to my terminal!' },
+    { type: 'system', text: 'Welcome to my portfolio terminal!' },
     { type: 'system', text: 'Type "help" to see available commands.' },
     { type: 'system', text: 'Navbar there for Losers!' },
     { type: 'prompt', text: '' }
