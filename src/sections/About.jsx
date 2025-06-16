@@ -14,26 +14,10 @@ const About = () => {
           About Me
         </motion.h2>
         
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-3xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            <div className="w-full h-[400px] bg-gray-200 dark:bg-gray-800 rounded-lg overflow-hidden">
-              {/* Replace with your actual image */}
-              <div className="w-full h-full flex items-center justify-center text-gray-400">
-                <span className="text-sm">Your Photo Here</span>
-              </div>
-            </div>
-
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
           >
