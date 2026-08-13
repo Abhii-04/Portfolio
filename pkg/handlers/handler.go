@@ -95,13 +95,14 @@ func (m *Repository) Login(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) Profile(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "profile.ejs", render.PageData{
 		Navbar: render.NavbarData{
-			LogoHref:    "/",
-			LogoText:    "abhi.dev",
-			ActionHref:  "/Logout",
-			ActionLabel: "Logout",
+			LogoHref:        "/",
+			LogoText:        "abhi.dev",
+			ActionHref:      "/",
+			ActionLabel:     "Back to Home",
+			IsAuthenticated: true,
 		},
 		Footer: render.FooterData{
-			Text: "Authenticated Profile|Abhishek yadav",
+			Text: "Profile | Abhishek Yadav",
 			Links: []render.NavLink{
 				{Href: "/", Label: "Home"},
 			},

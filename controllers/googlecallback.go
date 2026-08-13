@@ -90,7 +90,7 @@ func GoogleCallback(w http.ResponseWriter, r *http.Request) {
 		Upsert(upsertUser, "google_id", "representation", "").
 		ExecuteTo(&savedUsers)
 	if err != nil {
-		http.Error(w, "failed to save user", http.StatusInternalServerError)
+		http.Error(w, "failed to save user: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 	if len(savedUsers) == 0 {
@@ -99,8 +99,8 @@ func GoogleCallback(w http.ResponseWriter, r *http.Request) {
 	}
 	savedUser := savedUsers[0]
 
-	app.Session.Put(r.Context(),"authenticated",true)
-	app.Session.Put(r.Context(),"app_user_id",savedUser.ID)
+	app.Session.Put(r.Context(), "authenticated", true)
+	app.Session.Put(r.Context(), "app_user_id", savedUser.ID)
 	app.Session.Put(r.Context(), "google_id", savedUser.GoogleID)
 	app.Session.Put(r.Context(), "email", savedUser.Email)
 	app.Session.Put(r.Context(), "name", savedUser.Name)

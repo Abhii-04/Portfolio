@@ -21,6 +21,12 @@
         {{.ActionLabel}}
       </a>
     </div>
+    {{else if .IsAuthenticated}}
+    <div class="header-actions">
+      <a href="/profile" class="btn-contact">
+        Profile
+      </a>
+    </div>
     {{else if not .IsAuthenticated}}
     <div class="header-actions">
       <a href="/login" class="btn-contact">

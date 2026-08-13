@@ -1,46 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Iosevka+Charon:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile | Abhishek Yadav</title>
     <meta
       name="description"
-      content="Authenticated profile session details."
+      content="Profile details for your Abhishek Yadav portfolio account."
     />
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2318181b'/%3E%3Ctext x='50%25' y='57%25' text-anchor='middle' font-size='30' font-family='Arial,sans-serif' font-weight='800' fill='white'%3EA%3C/text%3E%3C/svg%3E"
     />
     <link rel="stylesheet" href="/static/styles/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
   </head>
   <body>
     {{template "navbar" .Navbar}}
 
     <main class="container profile-page">
-      <section class="profile-panel" aria-labelledby="profile-title">
-        <div class="profile-avatar-large">
-          {{if .User.Picture}}
-          <img src="{{.User.Picture}}" alt="{{.User.Name}}" />
-          {{else}}
-          <span>{{if .User.Name}}{{.User.Name}}{{else}}Profile{{end}}</span>
-          {{end}}
+      <section class="profile-hero" aria-labelledby="profile-title">
+        <div class="profile-identity">
+          <div class="profile-avatar-large">
+            {{if .User.Picture}}
+            <img src="{{.User.Picture}}" alt="{{.User.Name}}" />
+            {{else}}
+            <span>{{if .User.Name}}{{.User.Name}}{{else}}Profile{{end}}</span>
+            {{end}}
+          </div>
+
+          <div class="profile-details">
+            <p class="auth-kicker">Profile</p>
+            <h1 id="profile-title">{{if .User.Name}}{{.User.Name}}{{else}}Signed-in user{{end}}</h1>
+            <p class="profile-lede">
+              Manage the account details connected to your profile.
+            </p>
+          </div>
         </div>
 
-        <div class="profile-details">
-          <p class="auth-kicker">Authenticated profile</p>
-          <h1 id="profile-title">{{if .User.Name}}{{.User.Name}}{{else}}Signed-in user{{end}}</h1>
+        <form action="/logout" method="post" class="profile-actions">
+          <button type="submit" class="btn-card btn-primary profile-logout-button">
+            <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
+            <span>Logout</span>
+          </button>
+        </form>
+      </section>
+
+      <section class="profile-grid" aria-label="User details">
+        <article class="profile-card profile-card-wide">
+          <div class="profile-card-heading">
+            <i class="fa-solid fa-address-card" aria-hidden="true"></i>
+            <h2>Account Details</h2>
+          </div>
+
           <dl class="profile-meta-list">
             <div>
+              <dt>Name</dt>
+              <dd>{{if .User.Name}}{{.User.Name}}{{else}}Not available{{end}}</dd>
+            </div>
+            <div>
               <dt>Email</dt>
-              <dd>{{.User.Email}}</dd>
+              <dd>{{if .User.Email}}{{.User.Email}}{{else}}Not available{{end}}</dd>
             </div>
             <div>
               <dt>Google email status</dt>
-              <dd>{{if .User.VerifiedEmail}}Verified{{else}}Not verified{{end}}</dd>
+              <dd>
+                <span class="profile-status-pill {{if .User.VerifiedEmail}}is-verified{{end}}">
+                  {{if .User.VerifiedEmail}}Verified{{else}}Not verified{{end}}
+                </span>
+              </dd>
             </div>
           </dl>
-        </div>
+        </article>
+
+        <article class="profile-card">
+          <div class="profile-card-heading">
+            <i class="fa-brands fa-google" aria-hidden="true"></i>
+            <h2>Sign-in Method</h2>
+          </div>
+
+          <p class="profile-card-copy">
+            Google account sign-in is enabled for this profile.
+          </p>
+        </article>
+
+        <article class="profile-card">
+          <div class="profile-card-heading">
+            <i class="fa-solid fa-compass" aria-hidden="true"></i>
+            <h2>Quick Links</h2>
+          </div>
+
+          <div class="profile-link-list">
+            <a href="/">Home</a>
+            <a href="/#projects">Projects</a>
+            <a href="/#contact">Contact</a>
+          </div>
+        </article>
       </section>
     </main>
 
