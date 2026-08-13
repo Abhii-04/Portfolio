@@ -33,6 +33,9 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Get("/google_login", controllers.GoogleLogin)
 	mux.Get("/google_callback", controllers.GoogleCallback)
 
+	assetFiles := http.StripPrefix("/static/assets", http.FileServer(http.Dir("./frontend/assets")))
+	mux.Handle("/static/assets/*", assetFiles)
+
 	staticFiles := http.StripPrefix("/static", http.FileServer(http.Dir("./frontend/static")))
 	mux.Handle("/static/*", staticFiles)
 
