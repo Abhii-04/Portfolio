@@ -1,0 +1,19 @@
+{{define "footer"}}
+<footer class="site-footer">
+  <div class="container site-footer-content">
+    <p>
+      {{.Text}}
+    </p>
+
+    {{if .Links}}
+    <nav class="footer-links" aria-label="Footer navigation">
+      {{range .Links}}
+      <a href="{{.Href}}">
+        {{.Label}}
+      </a>
+      {{end}}
+    </nav>
+    {{end}}
+  </div>
+</footer>
+{{end}}

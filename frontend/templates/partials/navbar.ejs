@@ -1,0 +1,33 @@
+{{define "navbar"}}
+<header class="header">
+  <div class="container header-content">
+    <a class="logo" href="{{.LogoHref}}">
+      {{.LogoText}}
+    </a>
+
+    {{if .Links}}
+    <nav class="nav-links" aria-label="Primary navigation">
+      {{range .Links}}
+      <a href="{{.Href}}">
+        {{.Label}}
+      </a>
+      {{end}}
+    </nav>
+    {{end}}
+
+    {{if .ActionHref}}
+    <div class="header-actions">
+      <a href="{{.ActionHref}}" class="btn-contact">
+        {{.ActionLabel}}
+      </a>
+    </div>
+    {{else if not .IsAuthenticated}}
+    <div class="header-actions">
+      <a href="/login" class="btn-contact">
+        Login
+      </a>
+    </div>
+    {{end}}
+  </div>
+</header>
+{{end}}
