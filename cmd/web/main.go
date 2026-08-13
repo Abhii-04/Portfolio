@@ -12,7 +12,7 @@ import (
 	"github.com/alexedwards/scs/v2"
 )
 
-const portnumber = ":5000"
+const portnumber = ":8080"
 
 var app config.AppConfig
 var session *scs.SessionManager
