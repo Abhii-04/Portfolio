@@ -14,9 +14,8 @@ type GoogleConfig struct {
 }
 
 func NewGoogleConfig() *GoogleConfig {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("couldnt load .env file : ", err)
+	if err := godotenv.Load(); err != nil {
+		log.Println(".env not found, using system environment variables")
 	}
 
 	return &GoogleConfig{
